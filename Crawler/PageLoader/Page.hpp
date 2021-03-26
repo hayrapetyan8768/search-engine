@@ -7,7 +7,7 @@ class Page{
   
  private: 
     std::string domain;
-    std::string body; //html code
+    std::string body;
     int status;
 
  public: 

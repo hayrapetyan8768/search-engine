@@ -3,7 +3,7 @@
 #include <cstdio>
 
 
-void Parser::parse(const Page& page,const std::string& rootURL){
+void Parser::parse(const Page& page, const std::string& rootURL){
    
    std::string body = page.getBody();
     this->domain = this->getDomain(rootURL);
