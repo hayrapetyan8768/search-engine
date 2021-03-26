@@ -7,10 +7,12 @@
 class WebsiteRepository
 {
 private:
+
      std::vector<Website> websites;
      int idCounter;
 
 public:
+
    const std::vector<Website>& getAll() const;
    const std::pair<bool, Website> getById(int id);
    const std::pair<bool, Website> getByDomain(const std::string& domain) const;
