@@ -1,25 +1,38 @@
-#ifdef Parser_hpp#
-define Parser_hpp
+#ifdef PARSER_HPP
+define PARSER_HPP
 
+#include <gumbo.h>
 #include <string>
 #include <vector>
+#include <iostream>
+
+#include "Page.hpp"
 
 class Parser{
     private: 
-    std::string url;
-    std::string html;
+    
+    
     std::vector<std::string> urls; 
-    std::string title;std::string description;
+    std::string title;
+    std::string description;
     std::string allText;
+    std::string domain;
 
     private:
-     void extractUrls(GumboNode* node);
-
+     void extractUrls(GumboNode* node, const std::string& domain);
+     bool isLinkAbsolute(const std::string& url);
 
 public: 
-  Parser(const std:: string& url,const std::string$ html);
-  void parse();
- s td::vector<std::string>& getUrls() const;
+  
+  const std::vector<std::string>& getUrls() const;
+  const std::string& getTitle() const;
+  const std::string& getDescription() const;
+  const std::string& getAllText() const;
 
-}
+  const std::string& getDomain(const std::string& rootURL) const; 
+  void parse(const Page& page, const std::string& rootURL);
+ 
+
+};
+
 #endif

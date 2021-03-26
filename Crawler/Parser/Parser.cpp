@@ -1,32 +1,86 @@
 #include "Parser.hpp"
-#include <gumbo.h>
 
-Parser::Parser(const std:: string& url,const std::string$ html){
-    this->url=url;this->html=html;
+#include <cstdio>
+
+
+void Parser::parse(const Page& page,const std::string& rootURL){
+   
+   std::string body = page.getBody();
+    this->domain = this->getDomain(rootURL);
+    GumboOutput* output = gumbo_parse(body.c_str());
+    if(!output)
+    {
+        return;
+    }
+    this->extractLinks(output->root, domain);
+    gumbo_destroy_output(&kGumboDefaultOptions, output);
+
+}
+const std::string& Parser::getDomain(const std::string& rootURL) const
+{   
+    std::size_t slashPos = 0;
+    for(std::size_t i = 0; i < rootURL.size(); ++i, ++slashPos)
+    {
+        if(rootURL[i] == '/' && rootURL[i-1] == '/')
+        {
+            break;
+        }
+    }
+    while (rootURL[slashPos] != '/')
+    {
+        ++slashPos;
+    }
+
+    return std::string(rootURL, 0, slashPos);
 }
 
-void Parser::extractUrls(GumboNode* node){
+void Parser::extractUrls(GumboNode* node, const std::string& domain){
  if (node->type != GUMBO_NODE_ELEMENT){ 
+
      return;
+     
       }
- if (node->element.tag == GUMBO_TAG_A){ 
+
+
+ if (node->v.element.tag == GUMBO_TAG_A){ 
      GumboAttribute* herf =gumbo_get_attribute(&node->v.element.attributes, "herf");
-      if (href == nullptr || href->value == nullptr){ 
-          return;
+      if (href){ 
+          if(this->isLinkAbsolute(href->value))
+            {
+        this->urls.push_back(href->value);   
+            }else{
+                this->urls.push_back(domain + href->value);
+            }  
            }
- this->urls.push_back(std::string(href->value)); 
+           return;
  }
  
   GumboVector* children = &node->v.element.children; 
-  for (unsigned i = 0; i < children->length; i++){ 
-      this->extractUrls(static_cast<GumboNode*>(children->data[i])); 
+   for(size_t i = 0; i < children->length; i++){ 
+      this->extractUrls(static_cast<GumboNode*>(children->data[i]), domain); 
       } 
       
       }
-void Parser::parse(){ 
-    GumboOutput* output = gumbo_parse(this->html.c_str()); 
-    this->extractUrl(output->root); gumbo_destroy_output(&kGumboDefaultOptions, output);
- }
 const std::vector<std::string>& Parser::getUrls() const{ 
     return this->urls;
+}
+const std::string& Parser::getTitle() const{
+    return this->title;
+}
+const std::string& Parser::getDescription() const{
+    return this->description;
+}
+const std::string& Parser::getAllText() const{
+    return this->allText;
+}
+bool Parser::isLinkAbsolute(const std::string& url){
+    if(url.size() < 2) {
+        return false;
+    }
+
+    if(url[0] == '/' && url[1] == '/' || std::string(url, 0, 7) == "http://" || std::string(url, 0, 8) == "https://") {
+        return true;
+    }
+
+    return false;
 }

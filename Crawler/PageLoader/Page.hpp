@@ -4,11 +4,14 @@
 #include <string>
 
 class Page{
+  
  private: 
-    std::string body; 
+    std::string domain;
+    std::string body; //html code
     int status;
+
  public: 
-   Page(std::string body, int status); 
+   Page(std::string& body, int status); 
    ~Page();
 
  const std::string& getBody() const; 

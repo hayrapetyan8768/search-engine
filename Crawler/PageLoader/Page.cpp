@@ -1,7 +1,8 @@
 #include "Page.hpp"
 
 Page::Page(std::string& body, int status):
-        body(body), status(status){
+         body(body)
+        ,status(status){
         }
 
 Page::~Page() = default;
