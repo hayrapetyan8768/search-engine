@@ -1,7 +1,6 @@
 #ifdef PARSER_HPP
 define PARSER_HPP
 
-#include <gumbo.h>
 #include <string>
 #include <vector>
 #include <iostream>

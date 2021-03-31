@@ -9,7 +9,6 @@ class WebsiteRepository
 private:
 
      std::vector<Website> websites;
-     int idCounter;
 
 public:
 
@@ -22,9 +21,6 @@ public:
    void update(int id, const Website& website); 
 
 };
-
-
-
 
 
 #endif

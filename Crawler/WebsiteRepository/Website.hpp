@@ -19,6 +19,7 @@ public:
     const std::string& getHomepage() const;
     time_t getLastCrawlingTime() const;
 
+    Website(int id, const std::string& domain, const std::string&  hompagae,);
 };
 
 

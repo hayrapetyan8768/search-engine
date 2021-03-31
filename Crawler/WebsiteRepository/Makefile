@@ -8,4 +8,4 @@ WebsiteRepository: $(patsubst %.cpp,%.o,$(wildcard *.cpp))
     Website.o:   Website.hpp 
 
 	clean: 
-        rm *.o PageLoader
+        rm *.o WebsiteRepository

@@ -3,7 +3,7 @@
 
 
 time_t Website::getLastCrawlingTime() const{
-    this->lastCrawlingTime = time(nullptr);
+    this->lastCrawlingTime = time(NULL);
 }
 
 const std::string &Website::getDomain() const {
