@@ -1,10 +1,6 @@
-Parser: $(patsubst %.cpp,%.o,$(wildcard *.cpp))
-        gcc $^ -o $@ 
+project(Parser)
 
-    %.o: %.cpp
-        gcc -c $<
+set(CMAKE_BUILD_TYPE Debug)
 
-    Parser.o:     Parser.hpp 
-	clean: 
-        rm *.o Parser
-    
+add_library(parser STATIC Parser.cpp)
+target_link_libraries(parser -lgumbo)

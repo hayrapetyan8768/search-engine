@@ -1,11 +1,3 @@
-WebsiteRepository: $(patsubst %.cpp,%.o,$(wildcard *.cpp))
-        gcc $^ -o $@ 
+project(WebsiteRepository)
 
-    %.o: %.cpp
-        gcc -c $<
-
-    WebsiteRepository.o: WebsiteRepository.hpp Website.hpp
-    Website.o:   Website.hpp 
-
-	clean: 
-        rm *.o WebsiteRepository
+add_library(websiteRepository STATIC Website.cpp WebsiteRepository.cpp)

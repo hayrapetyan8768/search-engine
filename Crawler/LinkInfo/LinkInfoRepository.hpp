@@ -1,23 +1,23 @@
-#ifndef LINKENTERYREPOSITORY_HPP
-#define LINKENTERYREPOSITORY_HPP
+#ifndef LINKINFOREPOSITORY_HPP
+#define LINKINFOREPOSITORY_HPP
 
+#include "LinkInfo.hpp"
+#include "mysql.hpp"
 #include <vector>
-#include "LinkEntery.hpp"
+#include <optional>
 
-class LinkEnteryRepository
+class LinkInfoRepository
 {
 private:
-    std::vector<LinkEntery> links;
+    std::vector<LinkInfo> links;
 
 public:
-    const std::vector<LinkEntery>& getAll() const;
-    const std::pair<bool, LinkEntery> getById() const;
-    const std::pair<bool, LinkEntery> getByURL() const;
-    const std::vector<LinkEntery> getBy(const std::string& domain, LinkStatus status) const;
+    const std::vector<LinkInfo>& getAll() const;
+    const std::optional<LinkInfo> getByUrl(const std::string& url) const;
+    const std::vector<LinkInfo> getBy
+        (int websiteId, LinkStatus status, int count, sql::Connection* connection) const;
 
-    
+    void save(const LinkInfo& link, sql::Connection* connection);
 };
-
-
 
 #endif

@@ -1,37 +1,39 @@
-#ifdef PARSER_HPP
-define PARSER_HPP
+#ifndef PARSER_HPP
+#define PARSER_HPP
 
-#include <string>
+#include <gumbo.h>
 #include <vector>
+#include <string>
 #include <iostream>
 
-#include "Page.hpp"
+class Parser
+{
+private: // data
 
-class Parser{
-    private: 
+    std::vector<std::string> links;
     
-    
-    std::vector<std::string> urls; 
     std::string title;
     std::string description;
-    std::string allText;
+    std::string content;
+
     std::string domain;
+private: // functions
 
-    private:
-     void extractUrls(GumboNode* node, const std::string& domain);
-     bool isLinkAbsolute(const std::string& url);
+    void extractLinks(GumboNode* node, const std::string& rootURL);
+    void extractTitle(GumboNode* node);
+    void extractDescription(GumboNode* node);
+    void extractContent(GumboNode* node);
+    bool isLinkAbsolute(const std::string& url);
+    const std::string getDomain(const std::string& rootURL) const; 
 
-public: 
-  
-  const std::vector<std::string>& getUrls() const;
-  const std::string& getTitle() const;
-  const std::string& getDescription() const;
-  const std::string& getAllText() const;
-
-  const std::string& getDomain(const std::string& rootURL) const; 
-  void parse(const Page& page, const std::string& rootURL);
- 
-
+public:
+    [[nodiscard]] const std::vector<std::string>& getLinks() const;
+    [[nodiscard]] const std::string& getTitle() const;
+    [[nodiscard]] const std::string& getDescription() const;
+    [[nodiscard]] const std::string& getContent() const;
+    
+    
+    void parse(const std::string& body, const std::string& rootURL, const std::string& urlDomain);
 };
 
 #endif

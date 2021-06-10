@@ -1,27 +1,21 @@
 #ifndef WEBSITE_HPP
 #define WEBSITE_HPP
-
 #include <string>
 
 class Website
 {
 private:
-
-    int id;
+    int websiteId;
     std::string domain;
     std::string homepage;
-    time_t lastCrawlingTime;
+    bool crawled; 
 
 public:
-
-    int getId() const;
-    const std::string& getDomain() const;
-    const std::string& getHomepage() const;
-    time_t getLastCrawlingTime() const;
-
-    Website(int id, const std::string& domain, const std::string&  hompagae,);
+    Website(int websiteId, std::string domain, std::string homepage, bool crawled);
+    [[nodiscard]] int getWebsiteId() const;
+    [[nodiscard]] const std::string& getDomain() const;
+    [[nodiscard]] const std::string& getHomepage() const;
+    [[nodiscard]] bool isCrawled() const;
 };
-
-
 
 #endif

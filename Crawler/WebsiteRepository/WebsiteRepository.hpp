@@ -1,26 +1,49 @@
 #ifndef WEBSITEREPOSITORY_HPP
 #define WEBSITEREPOSITORY_HPP
 
-#include <vector>
-#include "Website.hpp"
+#include "WebsiteRepository.hpp"
 
-class WebsiteRepository
+
+WebsiteRepository::WebsiteRepository(sql::Connection* connection)
 {
-private:
+    sql::Statement* statement = connection->createStatement();
+    auto result = statement->executeQuery("SELECT * from Websites");
 
-     std::vector<Website> websites;
+    while(result->next())
+    {
+        Website website(result->getInt("id"), result->getString("domain"), result->getString("homepage"), false);
+        websites.push_back(website);
+    }  
+}
 
-public:
+const std::vector<Website>& WebsiteRepository::getAll() const
+{
+    return websites;
+}
 
-   const std::vector<Website>& getAll() const;
-   const std::pair<bool, Website> getById(int id);
-   const std::pair<bool, Website> getByDomain(const std::string& domain) const;
+const std::optional<Website> WebsiteRepository::getByDomain(const std::string& domain) const
+{
+    for(auto website : websites)
+    {
+        if(website.getDomain() == domain)
+        {
+            return website;
+        }
+    }
 
-   bool add(const Website& website);
+    return {};
+}
 
-   void update(int id, const Website& website); 
+void WebsiteRepository::add(const Website& website)
+{
+    websites.push_back(website);
+}
 
-};
+void WebsiteRepository::update(const std::string& domain, const Website& website, sql::Connection* connection)
+{
+    sql::PreparedStatement* prepst;
+    prepst = connection->prepareStatement("UPDATE Websites SET * WHERE domain=(?)");
+    prepst->setString(1, domain);
 
-
-#endif
+    prepst->execute();
+}

@@ -1,11 +1,24 @@
 #include "Page.hpp"
 
-Page::Page(std::string& body, int status):
-         body(body)
-        ,status(status){
+Page::Page(std::string& domain, std::string& effectiveUrl, std::string& body, int status):
+        domain(domain),
+        effectiveUrl(effectiveUrl),
+        body(body), 
+        status(status)
+        {
         }
 
 Page::~Page() = default;
+
+const std::string& Page::getDomain() const
+{
+    return this->domain;
+}
+
+const std::string Page::getEffectiveUrl() const
+{
+    return this->effectiveUrl;
+}
 
 const std::string& Page::getBody() const
 {
@@ -15,4 +28,9 @@ const std::string& Page::getBody() const
 int Page::getStatus() const
 {
     return status;
+}
+
+bool Page::isExist() const
+{
+    return this->exist;
 }

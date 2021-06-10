@@ -1,19 +1,30 @@
 #include "Website.hpp"
-#include <ctime>
 
 
-time_t Website::getLastCrawlingTime() const{
-    this->lastCrawlingTime = time(NULL);
+Website::Website(int websiteId, std::string domain, std::string homepage, bool isCrawled) :
+    websiteId(websiteId),
+    domain(std::move(domain)),
+    homepage(std::move(homepage)),
+    crawled(crawled)
+{
 }
 
-const std::string &Website::getDomain() const {
+int Website::getWebsiteId() const
+{
+    return this->websiteId;
+}
+
+const std::string& Website::getDomain() const
+{
     return this->domain;
 }
 
-const std::string &Website::getHomepage() const{
+const std::string& Website::getHomepage() const
+{
     return this->homepage;
 }
 
-int Website::getId() const {
-    return this->id;
+bool Website::isCrawled() const
+{
+    return this->crawled;
 }

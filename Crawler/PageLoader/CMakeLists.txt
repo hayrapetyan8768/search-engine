@@ -1,11 +1,7 @@
-PageLoader: $(patsubst %.cpp,%.o,$(wildcard *.cpp))
-        gcc $^ -o $@ 
 
-    %.o: %.cpp
-        gcc -c $<
+project(PageLoader)
 
-    PageLoader.o:     PageLoader.hpp Page.hpp 
-    Page.o:   Page.hpp 
+set(CMAKE_BUILD_TYPE Debug)
 
-	clean: 
-        rm *.o PageLoader
+add_library(pageLoader STATIC Page.cpp PageLoader.cpp)
+target_link_libraries(pageLoader -lcurl)

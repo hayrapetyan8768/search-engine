@@ -1,27 +1,24 @@
-#ifndef LINKENTERY_HPP
-#define LINKENTERY_HPP
+#ifndef LINKINFO_HPP
+#define LINKINFO_HPP
 
-#include <string>
 #include "LinkStatus.hpp"
 
-class LinkEntery
+#include <string>
+#include <ctime>
+
+class LinkInfo
 {
 private:
-      int id;
-      std::string domain;
-      std::string url;
-      time_t loaded;
-      LinkStatus status;
+    std::string url;
+    int websiteId;  // change constructor, ....
+    LinkStatus status;
 
 public:
-    LinkEntery(int id, std::string& domain, std::string url, time_t loaded, LinkStatus status);
+    LinkInfo(std::string url, int websiteId, LinkStatus status);
 
-    int getId() const;
-    const std::string getDomain();
-
+    [[nodiscard]] const std::string& getUrl() const;
+    [[nodiscard]] int getWebsiteId() const;
+    [[nodiscard]] LinkStatus getStatus() const;
 };
-
-
-
 
 #endif
